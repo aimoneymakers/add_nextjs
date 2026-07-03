@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 import StatCounter from '@/components/StatCounter';
 import ContactForm from '@/components/ContactForm';
@@ -18,9 +19,27 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="relative bg-ink text-white overflow-hidden">
-        <div className="absolute inset-0 bg-grain pointer-events-none" />
-        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-signal/20 blur-[120px]" />
-        <div className="absolute -bottom-40 -left-20 w-[400px] h-[400px] rounded-full bg-bid/10 blur-[120px]" />
+        {/* Background photo */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/hero/team-hero.webp"
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={70}
+            sizes="100vw"
+            className="object-cover"
+          />
+          {/* Dark tint so text stays readable over the photo */}
+          <div className="absolute inset-0 bg-ink/70" />
+        </div>
+
+        {/* Glow blobs sit above the tint and blend with the photo's light areas,
+            so the dark overlay doesn't wash out their hue/brightness */}
+        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-signal/40 blur-[120px] mix-blend-screen" />
+        <div className="absolute -bottom-40 -left-20 w-[400px] h-[400px] rounded-full bg-bid/30 blur-[120px] mix-blend-screen" />
+        <div className="absolute inset-0 bg-grain pointer-events-none mix-blend-overlay" />
 
         <div className="container-page relative py-24 md:py-36">
           <p className="eyebrow mb-6 text-signal-soft">Google Ads · Bing Ads · Shopping</p>
